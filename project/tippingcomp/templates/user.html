@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="/tippingcomp/templates/topnav.css">
+  </head>
+  <style>
+    {% include 'topnav.css' %}
+
+    .title {
+        text-align: center;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    body {
+      text-align: center;
+    }
+
+    .score {
+      position: relative;
+      display: inline-block;
+      width: 25%;
+      font-size: large;
+    }
+  
+  </style>
+  <body>
+    {% include 'topnav.html' %}
+      <div class="title"><h1>{{ user.first_name }}</h1></div>
+      <div class="score">Score: {{ user.score }}</div>
+      <br>
+      <div class="bets">
+        {% for round in bets %}
+        <br>
+        <b>{{ round.0 }}</b>
+        <br>
+          {% for bet in round %}
+            {% if bet != round.0 %}
+              <div>{{ bet }}</div>
+            {% endif%}
+          {% endfor %} 
+        {% endfor %} 
+      </div>
+  </body>
+</html>

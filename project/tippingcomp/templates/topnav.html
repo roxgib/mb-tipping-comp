@@ -1,0 +1,13 @@
+<div class="topnav">
+    <a href="/tippingcomp/">Home</a>
+    <a href="/tippingcomp/scoreboard">Leaderboard</a>
+    <a href="/tippingcomp/matches/upcoming">Upcoming Matches</a>
+    <a href="/tippingcomp/matches/recent">Recent Matches</a>
+    <a href="/tippingcomp/matches/">All Matches</a>
+    <a href="/tippingcomp/help">Help</a>
+    <div class="login">{% if user.is_authenticated %}
+        <a href="{% url 'logout' %}">Log Out</a>
+        {% else %}
+        <a href="login">Login</a>
+        {% endif %}</div>
+</div>

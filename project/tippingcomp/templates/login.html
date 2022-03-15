@@ -1,0 +1,22 @@
+<html>
+  <style>
+    {% include 'topnav.css' %}
+
+    .loginform {
+      display: flex;
+      justify-content: center;
+    }
+  </style>
+  <body>
+    {% include 'topnav.html' %}
+    <br>
+    <br>
+    <div class="loginform">
+      <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Log In</button>
+      </form>
+    </div>
+  </body>
+</html>
