@@ -84,10 +84,7 @@ class Bet(models.Model):
     #  5 -> bet too late
 
     def __str__(self):
-        return f"""{self.match.__str__()}: {self.user.first_name} {
-            "is yet to bet." if self.bet is None
-            else [self.match.hteam,self.match.ateam][self.bet]
-        }"""
+        return self.match + self.user + (self.match.hteam if self.bet else self.match.ateam)
 
     def update(self):
         pass
