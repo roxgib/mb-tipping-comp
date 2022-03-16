@@ -71,7 +71,7 @@ class Match(models.Model):
         return f"{self.home_team_key.abbrev} vs. {self.away_team_key.abbrev}, {self.date.strftime('%a %-d %b')} (R{self.round})"
 
     def datetime(self) -> datetime:
-        date = datetime.strptime(str(self.date[:6]+self.tz.replace(':','')), "%Y-%m-%d %H:%M:%S%z")
+        date = datetime.strptime(str(self.localtime)[:-6]+self.tz.replace(':',''), "%Y-%m-%d %H:%M:%S%z")
         return date
 
     def begun(self) -> bool:
