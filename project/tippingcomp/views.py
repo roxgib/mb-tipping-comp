@@ -7,6 +7,7 @@ from django.views.static import serve
 
 from .models import Bet, Match, Team, User
 from .squiggle import updateMatches, updateTeams
+from .funcs import add_match_info
 
 
 def index(request):
@@ -28,28 +29,34 @@ def help(request):
 
 def matches(request):
     ms = Match.objects.all()
-    return render(request, 'matches.html', {"matches":ms, "title":"All Matches"})
+    return render(request, 'matches.html', {"matches":add_match_info(get_user(request),ms), "title":"All Matches"})
 
 
 def upcoming_matches(request):
     ms = Match.objects.all()
-    ms = [match for match in ms if match.date > timezone.now()]
-    return render(request, 'matches.html', {"matches":ms, "title":"Upcoming Matches"})
+    ms = [match for match in ms if not match.begun()]
+    return render(request, 'matches.html', {"matches":add_match_info(get_user(request),ms), "title":"Upcoming Matches"})
 
 
 def recent_matches(request):
     ms = Match.objects.all()
-    ms = [match for match in ms if match.date < timezone.now()]
-    return render(request, 'matches.html', {"matches":ms, "title":"Recent Matches"})
+    ms = [match for match in ms if match.begun()]
+    return render(request, 'matches.html', {"matches":add_match_info(get_user(request),ms), "title":"Recent Matches"})
 
 
 def match(request, id):
     match = Match.objects.get(id=id)
     try:
         bet = Bet.objects.get(match=match, user=get_user(request))
-        bet = "You have bet on " + (bet.match.hteam if bet.bet else bet.match.ateam)
+        bet = f"You bet on {bet.match.hteam if bet.bet else bet.match.ateam}. "
     except:
-        bet = "You waited too long to be on this game" if match.complete else "You haven't bet on this game yet" 
+        bet = "You haven't bet on this game." 
+
+    if match.begun():
+        bet += "Bets have now closed."
+    else:
+        bet += "Bets are still open."
+
     return render(
         request, 
         "match.html",
@@ -66,12 +73,11 @@ def bet(request, id: int, homeoraway: str) -> HttpResponse:
     if homeoraway != "home" and homeoraway != "away": return HttpResponse("Error")
     homeoraway = True if homeoraway == "home" else False
     user = get_user(request)
-    user = User.objects.get(first_name=user.first_name)
     if not user.is_authenticated:
         return HttpResponse('You need to login to bet. Click <a href="login">here</a> to login')
     
     match = Match.objects.get(id=id)
-    if match.complete:
+    if match.begun():
         return redirect(f"/tippingcomp/matches/{id}/")
 
     bet = Bet.objects.filter(user=user, match=match)

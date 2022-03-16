@@ -78,6 +78,16 @@
         <a href="/tippingcomp/matches/{{ match.id }}"><div class="row">
             <div class="team"><img src="/tippingcomp/logos/{{match.home_team_key.abbrev}}.png" alt="Logo" height="auto"/></div><div class="vs"><div class="info">{{ match.venue }}<br><br><div>{{ match.date }}<br><br></div></div></div><div class="team"><img src="/tippingcomp/logos/{{match.away_team_key.abbrev}}.png" alt="Logo" height="auto"/></div>
             <br>
+            <div class="info">  
+              {% if match.has_bet %}
+                You have bet on {{ match.bet_team }}.
+              {% endif %}
+              {% if match.begun %}
+                Bets have closed.
+              {% else %}
+                Bets are still open.
+              {% endif %}
+            </div>
         </div></a>
       </div>
       {% endfor %}

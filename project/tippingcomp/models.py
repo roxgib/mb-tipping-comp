@@ -1,9 +1,13 @@
+from datetime import datetime, timedelta, timezone
+from dateutil import parser
 from email.utils import localtime
 from operator import mod
 from time import strftime
+from typing import Union
 from django.db import models
 
 from django.contrib.auth.models import User as dUser
+import pytz
 
 class Team(models.Model):
     id = models.IntegerField('ID', primary_key=True)
@@ -62,10 +66,17 @@ class Match(models.Model):
     is_final = models.BooleanField(default=False)
     year = models.IntegerField(default=2022)
     complete = models.BooleanField(default=False)
-    localtime = models.CharField(max_length=100, default=None, blank=True, null=True)
+    localtime = models.DateTimeField('Local Time', default=None, blank=True, null=True)
 
     def __str__(self):
         return f"{self.home_team_key.abbrev} vs. {self.away_team_key.abbrev}, {self.date.strftime('%a %-d %b')} (R{self.round})"
+
+    def datetime(self) -> datetime:
+        date = datetime.strptime(str(self.date), "%Y-%m-%d %H:%M:%S%z")
+        return date
+
+    def begun(self) -> bool:
+        return self.datetime() < datetime.now(timezone.utc)
 
     class Meta:
         verbose_name_plural = 'Matches'
