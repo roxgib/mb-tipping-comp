@@ -34,3 +34,9 @@ def add_match_info(user: User, matches: List[Match]) -> List[Match]:
         match.begun = match.begun()
     
     return matches
+
+
+def tilly_bets():
+    fav_teams = [
+        "Sydney"
+    ]

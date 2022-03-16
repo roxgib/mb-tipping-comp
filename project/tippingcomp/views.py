@@ -73,6 +73,7 @@ def bet(request, id: int, homeoraway: str) -> HttpResponse:
     if homeoraway != "home" and homeoraway != "away": return HttpResponse("Error")
     homeoraway = True if homeoraway == "home" else False
     user = get_user(request)
+    user = User.objects.get(first_name=user.first_name, last_name=user.last_name)
     if not user.is_authenticated:
         return HttpResponse('You need to login to bet. Click <a href="login">here</a> to login')
     
