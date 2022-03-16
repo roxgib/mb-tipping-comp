@@ -95,13 +95,15 @@ def getPlayerValue(firstname=None,surname=None,name=None,match=None,year=None,te
 
 def updateMatches():
     updated_matches = getMatches()
-    matches = Match.objects.all()
 
     for match in updated_matches[::-1]:
         match['home_team_key'] =  Team.objects.get(name=match['hteam'])
         match['away_team_key'] =  Team.objects.get(name=match['ateam'])
-        if match['id'] in matches:
-            pass
+        if umatch := Match.objects.get(id=match['id']):
+            if not match['updated'] == umatch.updated:
+                for key, value in match.items():
+                    umatch[key] = value
+                umatch.save()
         else:
             m = Match(**match)
             m.save()
