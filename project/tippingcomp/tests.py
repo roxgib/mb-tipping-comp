@@ -81,4 +81,5 @@ class TimeHandlingTests(TestCase):
         match = Match(**getMatches(game="8662")[0])
         self.assertEquals(match.timezones(), datetime)
         self.assertEquals(match.utc_datetime(), datetime(2022, 3, 16, 19, 10, 00))
+        self.assertEquals()
 
