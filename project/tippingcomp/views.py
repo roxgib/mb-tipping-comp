@@ -35,12 +35,14 @@ def matches(request):
 def upcoming_matches(request):
     ms = Match.objects.all()
     ms = [match for match in ms if not match.begun()]
+    ms = sorted(ms, key=lambda a:a.date)[:15]
     return render(request, 'matches.html', {"matches":add_match_info(get_user(request),ms), "title":"Upcoming Matches"})
 
 
 def recent_matches(request):
     ms = Match.objects.all()
     ms = [match for match in ms if match.begun()]
+    ms = sorted(ms, key=lambda a:a.date)[:15]
     return render(request, 'matches.html', {"matches":add_match_info(get_user(request),ms), "title":"Recent Matches"})
 
 
