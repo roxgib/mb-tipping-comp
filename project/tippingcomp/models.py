@@ -84,7 +84,7 @@ class Bet(models.Model):
     #  5 -> bet too late
 
     def __str__(self):
-        return str(self.match) + str(self.user) + ":" + (self.match.hteam if self.bet else self.match.ateam)
+        return f"{self.user.first_name} {self.match} {self.match.hteam if self.bet else self.match.ateam}"
 
     def update(self):
         pass
