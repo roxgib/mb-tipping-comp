@@ -1,5 +1,4 @@
 from datetime import datetime, timedelta, timezone
-from dateutil import parser
 from email.utils import localtime
 from operator import mod
 from time import strftime
