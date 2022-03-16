@@ -1,20 +1,12 @@
-from datetime import datetime
-import os
-
-from django.shortcuts import render
-from django.http import HttpResponse
 
 from django.contrib.auth import authenticate, get_user
-
-from django.shortcuts import render, redirect
-
+from django.http import HttpResponse
+from django.shortcuts import redirect, render
 from django.utils import timezone
-
-
-from .models import Match, Bet, User, Team
-from .squiggle import updateMatches, updateTeams
-
 from django.views.static import serve
+
+from .models import Bet, Match, Team, User
+from .squiggle import updateMatches, updateTeams
 
 
 def index(request):
