@@ -13,15 +13,11 @@ from django.utils import timezone
 
 from .models import Match, Bet, User, Team
 from .squiggle import updateMatches, updateTeams
-from .users import createUsers
 
 from django.views.static import serve
 
 
 def index(request):
-    #updateTeams()
-    #updateMatches()
-    #createUsers()
     return render(request, 'index.html')
 
 
