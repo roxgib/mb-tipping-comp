@@ -52,7 +52,7 @@ def match(request, id):
         bet = Bet.objects.get(match=match, user=get_user(request))
         bet = f"You bet on {bet.match.hteam if bet.bet else bet.match.ateam}. "
     except:
-        bet = "You haven't bet on this game." 
+        bet = "You haven't bet on this game. " 
 
     if match.begun():
         bet += "Bets have now closed."
@@ -72,12 +72,12 @@ def match(request, id):
 
 
 def bet(request, id: int, homeoraway: str) -> HttpResponse:
-    if homeoraway != "home" and homeoraway != "away": return HttpResponse("Error")
+    if homeoraway not in ('home' 'away'): return HttpResponse("Error")
     homeoraway = True if homeoraway == "home" else False
     user = get_user(request)
     user = User.objects.get(first_name=user.first_name, last_name=user.last_name)
     if not user.is_authenticated:
-        return HttpResponse('You need to login to bet. Click <a href="login">here</a> to login')
+        return redirect(f"/login/")
     
     match = Match.objects.get(id=id)
     if match.begun():
@@ -95,7 +95,7 @@ def bet(request, id: int, homeoraway: str) -> HttpResponse:
 
 def scoreboard(request):
     users = User.objects.all()
-    return render(request, 'scoreboard.html', {'users':sorted(users, key=lambda u:u.score)})
+    return render(request, 'scoreboard.html', {'users':sorted(users, key=lambda u: u.score)})
 
 
 def showuser(request, name):
