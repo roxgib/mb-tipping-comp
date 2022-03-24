@@ -72,12 +72,15 @@ def match(request, id):
 
 
 def bet(request, id: int, homeoraway: str) -> HttpResponse:
-    if homeoraway not in ('home' 'away'): return HttpResponse("Error")
+    if homeoraway not in ('home' 'away'): redirect(f"/tippingcomp/matches/{id}/")
     homeoraway = True if homeoraway == "home" else False
     user = get_user(request)
-    user = User.objects.get(first_name=user.first_name, last_name=user.last_name)
     if not user.is_authenticated:
         return redirect(f"/login/")
+    try:
+        user = User.objects.get(first_name=user.first_name, last_name=user.last_name)
+    except User.DoesNotExist:
+        return redirect(f"/logout/")
     
     match = Match.objects.get(id=id)
     if match.begun():
