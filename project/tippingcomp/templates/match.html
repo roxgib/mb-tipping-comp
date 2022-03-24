@@ -7,15 +7,8 @@
 
     {% include 'base.css' %}
 
-
-    .row {
-      display: block;
-      font-weight: bold;
-      font-size: large;
-
-    }
-
     .rowcontainer {
+        display: block;
         border-bottom: 1px solid #afafaf;
         max-width: 600px;
         margin: auto;
@@ -34,6 +27,7 @@
     .vs {
       display: inline-block;
       text-align: center;
+      margin: auto;
     }
 
     .info {
@@ -59,12 +53,12 @@
     <div class="title"><h1>{{ title }}</h1></div>
     <div class="container">
       <div class="rowcontainer">
-        <div class="row">
-          <div class="team col-5 col-sm-5"><a href="bet/home"><img src="/static/{{match.home_team_key.abbrev}}.png" class="img-fluid" alt="Logo"/></a></div><div class="vs col-sm-2 col-2 order-sm-2 order-3"><div class="align-middle info">{{ match.venue }}<br><br><div>{{ date }}<br>{{ time }}</div></div></div><div class="col-5 col-sm-5 order-sm-3 order-2 team"><a href="bet/away"><img src="/static/{{match.away_team_key.abbrev}}.png" class="img-fluid" alt="Logo"/></a></div>
+        <div class="row order-sm-2">
+          <div class="team col-6 col-sm-5"><a href="bet/home"><img src="/static/{{match.home_team_key.abbrev}}.png" class="img-fluid" alt="Logo"/><br>{{ match.home_team_key.name }}</a></div><div class="col-6 col-sm-5 order-sm-3 team"><a href="bet/away"><img src="/static/{{match.away_team_key.abbrev}}.png" class="img-fluid" alt="Logo"/><br>{{ match.away_team_key.name }}</a></div><div class="vs align-middle col-sm-2 order-sm-2"><div class="info">{{ match.venue }}<br><br><div>{{ date }}<br>{{ time }}</div></div></div>
 
         </div>
-        <div class="row">
-          <div class="team align-middle col-5">{{ match.home_team_key.name }}</div><div class="info align-middle col-2"></div><div class="team align-middle col-5">{{ match.away_team_key.name }}</div>
+        <div class="row order-sm-1">
+          <div class="team align-middle col-5"></div><div class="info align-middle col-2"></div><div class="team align-middle col-5"></div>
         </div>
       </div>
       <div class="bet"><br>{{ bet }}</div>
