@@ -22,6 +22,8 @@
       padding-top: 10px;
       padding-left: 10px;
       padding-right: 10px;
+      font-size: large;
+      font-weight: bold;
     }
 
     .vs {
@@ -44,7 +46,6 @@
 
     .bet {
       text-align: center;
-      font-size: medium;
     }
 
   </style>
@@ -53,12 +54,8 @@
     <div class="title"><h1>{{ title }}</h1></div>
     <div class="container">
       <div class="rowcontainer">
-        <div class="row order-sm-2">
-          <div class="team col-6 col-sm-5"><a href="bet/home"><img src="/static/{{match.home_team_key.abbrev}}.png" class="img-fluid" alt="Logo"/><br>{{ match.home_team_key.name }}</a></div><div class="col-6 col-sm-5 order-sm-3 team"><a href="bet/away"><img src="/static/{{match.away_team_key.abbrev}}.png" class="img-fluid" alt="Logo"/><br>{{ match.away_team_key.name }}</a></div><div class="vs align-middle col-sm-2 order-sm-2"><div class="info">{{ match.venue }}<br><br><div>{{ date }}<br>{{ time }}</div></div></div>
-
-        </div>
-        <div class="row order-sm-1">
-          <div class="team align-middle col-5"></div><div class="info align-middle col-2"></div><div class="team align-middle col-5"></div>
+        <div class="row">
+          <div class="team col-6 col-sm-5"><a href="bet/home"><img src="/static/{{match.home_team_key.abbrev}}.png" class="img-fluid" alt="Logo"/><br><br>{{ match.home_team_key.name }}</a></div><div class="col-6 col-sm-5 order-sm-3 team"><a href="bet/away"><img src="/static/{{match.away_team_key.abbrev}}.png" class="img-fluid" alt="Logo"/><br><br>{{ match.away_team_key.name }}</a></div><div class="vs align-middle col-sm-2 order-sm-2"><div class="info">{{ match.venue }}<br><br><div>{{ date }}<br>{{ time }}</div></div></div>
         </div>
       </div>
       <div class="bet"><br>{{ bet }}</div>

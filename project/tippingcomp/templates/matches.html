@@ -6,15 +6,6 @@
   <style>
 
     {% include 'base.css' %}
-  
-
-    .title {
-        text-align: center;
-        margin: auto;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
 
     .rowcontainer {
       border-bottom: 1px solid #afafaf;
@@ -62,7 +53,6 @@
   </style>
   <body>
     {% include 'topnav.html' %}
-    <div class="title"><h1>{{ title }}</h1></div>
     <div id="container">
       {% for match in matches %}
       <div class="row rowcontainer">
