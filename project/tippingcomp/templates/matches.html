@@ -51,9 +51,12 @@
     .vs {
       display: inline-block;
       width: 20%;
-      height: auto;
+      height: 100%;
       margin: auto;
       text-align: center;
+      font-size: small;
+      font-weight: normal;
+      position: relative;
     }
 
     .info {
@@ -78,8 +81,7 @@
       {% for match in matches %}
       <div class="rowcontainer">
         <a href="/tippingcomp/matches/{{ match.id }}"><div class="row">
-            <div class="team"><img src="/static/{{match.home_team_key.abbrev}}.png" alt="Logo" height="auto"/></div><div class="vs"><div class="info">{{ match.venue }}<br><br><div>{{ match.date }}<br><br></div></div></div><div class="team"><img src="/static/{{match.away_team_key.abbrev}}.png" alt="Logo" height="auto"/></div>
-            <br>
+            <div class="team"><img src="/static/{{match.home_team_key.abbrev}}.png" alt="Logo" height="auto"/></div><div class="vs">{{ match.venue }}<br><br>{{ match.date }}</div><div class="team"><img src="/static/{{match.away_team_key.abbrev}}.png" alt="Logo" height="auto"/></div>
             <div class="info">  
               {% if match.has_bet %}
                 You have bet on {{ match.bet_team }}.

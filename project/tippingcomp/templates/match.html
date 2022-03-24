@@ -82,8 +82,8 @@
     <div id="container">
       <div class="rowcontainer">
         <div class="row">
-          <a href="bet/home"><div class="team"><img src="/tippingcomp/logos/{{match.home_team_key.abbrev}}.png" alt="Logo" height="auto"/><br><br>{{ match.hteam }}</div></a><div class="vs"><div class="info">{{ date }}<br>{{ time }}<br><br>{{ match.venue }}<br><br><br></div></div><a href="bet/away"><div class="team"><img src="/tippingcomp/logos/{{match.away_team_key.abbrev}}.png" alt="Logo" height="auto"/><br><br>{{ match.ateam }}</div></a>
-          <br>
+          
+          <div class="team"><a href="bet/home"><img src="/static/{{match.home_team_key.abbrev}}.png" alt="Logo" height="auto"/><br>{{ match.home_team_key.name }}</a></div><div class="vs"><div class="info">{{ match.venue }}<br><br><div>{{ date }}<br>{{ time }}<br><br><br></div></div></div><div class="team"><a href="bet/away"><img src="/static/{{match.away_team_key.abbrev}}.png" alt="Logo" height="auto"/><br>{{ match.home_team_key.name }}</a></div>
         </div>
       </div>
       <div class="bet"><br>{{ bet }}</div>
