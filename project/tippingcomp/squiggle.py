@@ -6,7 +6,7 @@ import json
 
 
 if __name__ != '__main__':
-    from .models import Match, Team, Bet
+    from .models import Match, Team, Bet, User
 
 squiggle = 'https://api.squiggle.com.au/'
 
@@ -119,7 +119,7 @@ def update():
     for bet in bets:
         bet.updateResult()
 
-    users = Bet.objects.all()
+    users = User.objects.all()
     for user in users:
         user.updateScore()
 

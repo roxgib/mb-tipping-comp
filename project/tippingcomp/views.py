@@ -95,8 +95,6 @@ def bet(request, id: int, homeoraway: str) -> HttpResponse:
 
 def scoreboard(request):
     users = User.objects.all()
-    for user in users:
-        user.updateScore()
     return render(request, 'scoreboard.html', {'users':sorted(users, key=lambda u: u.score, reverse=True)})
 
 
