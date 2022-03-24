@@ -82,7 +82,7 @@
       {% for match in matches %}
       <div class="rowcontainer">
         <a href="/tippingcomp/matches/{{ match.id }}"><div class="row">
-            <div class="team"><img src="/static/{{match.home_team_key.abbrev}}.png" alt="Logo" height="auto"/></div><div class="vs">{{ match.venue }}<br><br>{{ match.date }}</div><div class="team"><img src="/static/{{match.away_team_key.abbrev}}.png" alt="Logo" height="auto"/></div>
+            <div class="team"><img src="/static/{{match.home_team_key.abbrev}}.png" alt="Logo" height="auto" width="auto"/></div><div class="vs">{{ match.venue }}<br><br>{{ match.date }}</div><div class="team"><img src="/static/{{match.away_team_key.abbrev}}.png" alt="Logo" height="auto"/></div>
             <div class="info">  
               {% if match.has_bet %}
                 You have bet on {{ match.bet_team }}.
