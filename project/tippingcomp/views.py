@@ -76,11 +76,11 @@ def bet(request, id: int, homeoraway: str) -> HttpResponse:
     homeoraway = True if homeoraway == "home" else False
     user = get_user(request)
     if not user.is_authenticated:
-        return redirect(f"/login/")
+        return redirect(f"/tippingcomp/login/")
     try:
         user = User.objects.get(first_name=user.first_name, last_name=user.last_name)
     except User.DoesNotExist:
-        return redirect(f"/logout/")
+        return redirect(f"tippingcomp/logout/")
     
     match = Match.objects.get(id=id)
     if match.begun():
@@ -90,7 +90,6 @@ def bet(request, id: int, homeoraway: str) -> HttpResponse:
     if bet: bet.delete()
 
     b = Bet(user=user, match=match, bet=homeoraway)
-    b.update()
     b.save()
 
     return redirect(f"/tippingcomp/matches/{id}/")
