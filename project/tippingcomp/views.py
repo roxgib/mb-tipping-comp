@@ -6,7 +6,7 @@ from django.utils import timezone
 from django.views.static import serve
 
 from .models import Bet, Match, Team, User
-from .squiggle import updateMatches, updateTeams
+from .squiggle import update, updateTeams
 from .funcs import add_match_info
 
 
@@ -95,7 +95,9 @@ def bet(request, id: int, homeoraway: str) -> HttpResponse:
 
 def scoreboard(request):
     users = User.objects.all()
-    return render(request, 'scoreboard.html', {'users':sorted(users, key=lambda u: u.score)})
+    for user in users:
+        user.updateScore()
+    return render(request, 'scoreboard.html', {'users':sorted(users, key=lambda u: u.score, reverse=True)})
 
 
 def showuser(request, name):

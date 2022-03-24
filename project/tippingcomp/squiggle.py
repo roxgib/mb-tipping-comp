@@ -4,8 +4,9 @@
 from requests import get
 import json
 
+
 if __name__ != '__main__':
-    from .models import Match, Team
+    from .models import Match, Team, Bet
 
 squiggle = 'https://api.squiggle.com.au/'
 
@@ -93,23 +94,38 @@ def getPlayerValue(firstname=None,surname=None,name=None,match=None,year=None,te
     return result
 
 
-def updateMatches():
+def update():
     updated_matches = getMatches()
 
     for match in updated_matches[::-1]:
-        match['home_team_key'] =  Team.objects.get(name=match['hteam'])
-        match['away_team_key'] =  Team.objects.get(name=match['ateam'])
-        if umatch := Match.objects.get(id=match['id']):
-            if not match['updated'] == umatch.updated:
-                for key, value in match.items():
-                    umatch[key] = value
-                umatch.save()
+        if match['hteamid'] is None or match['ateamid'] is None: continue
+        match['home_team_key'] =  Team.objects.get(id=match['hteamid'])
+        match['away_team_key'] =  Team.objects.get(id=match['ateamid'])
+        match['complete'] = True if match['complete'] == 100 else False
+
+        try:
+            umatch = Match.objects.get(id=match['id'])
+        except Match.DoesNotExist:
+            umatch = None 
+        if umatch:
+            for key, value in match.items():
+                setattr(umatch, key, value)
+            umatch.save()
         else:
             m = Match(**match)
             m.save()
 
+    bets = Bet.objects.all()
+    for bet in bets:
+        bet.updateResult()
 
+    users = Bet.objects.all()
+    for user in users:
+        user.updateScore()
+
+# from tippingcomp.squiggle import *
 def updateTeams():
+    return # need to fix this
     updated_teams = getTeams()
     teams = Team.objects.all()
 
@@ -120,6 +136,7 @@ def updateTeams():
         else:
             t = Team(**team)
             t.save()
+
 
 if __name__ == '__main__':
     import subprocess

@@ -27,8 +27,7 @@ class User(dUser):
         return self.first_name + ' ' + self.last_name
 
     def updateScore(self):
-        bets = Bet.objects.all()
-        bets = [bet for bet in bets if bet.user is self]
+        bets = [bet for bet in Bet.objects.all() if bet.user == self]
 
         score = 0
         for bet in bets:
@@ -86,15 +85,17 @@ class Bet(models.Model):
     match = models.ForeignKey(Match, on_delete=models.CASCADE, default=None, blank=True, null=True)
     bet = models.BooleanField("Bet", max_length=200) # True -> Home Team, False -> Away Team
     result = models.IntegerField("Result", default=None, blank=True, null=True) 
-    # 0 -> bet not made 
-    #  1 -> match not over 
-    #  2 -> correct 
-    #  3 -> incorrect 
-    #  4 -> draw 
-    #  5 -> bet too late
+    #  True -> correct
+    #  False -> incorrect
+    #  None -> draw or match not over
 
     def __str__(self):
         return f"{self.user.first_name} {self.match} {self.match.hteam if self.bet else self.match.ateam}"
 
-    def update(self):
-        pass
+    def updateResult(self):
+        if self.match.complete and self.match.winnerteamid is not None:
+            self.result = (self.match.winnerteamid == self.match.hteamid) == self.bet
+        else:
+            self.result =  None
+
+        self.save()
