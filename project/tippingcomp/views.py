@@ -75,8 +75,8 @@ def bet(request, id: int, homeoraway: str) -> HttpResponse:
     try:
         user = User.objects.get(first_name=user.first_name, last_name=user.last_name)
     except User.DoesNotExist:
-        return redirect(f"tippingcomp/login/")
-    
+        return redirect(f"/tippingcomp/login/")
+
     match = Match.objects.get(id=id)
     if match.begun():
         return redirect(f"/tippingcomp/matches/{id}/")
