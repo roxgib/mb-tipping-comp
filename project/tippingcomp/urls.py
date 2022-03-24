@@ -5,8 +5,8 @@ from . import views
 urlpatterns = [
     path('', views.index, name='index'),
     path('matches/', views.matches, name='matches'),
-    path('matches/upcoming/', views.upcoming_matches, name='bet'),
-    path('matches/recent/', views.recent_matches, name='bet'),
+    path('matches/upcoming/', views.upcoming_matches, name='upcoming matches'),
+    path('matches/recent/', views.recent_matches, name='recent matches'),
     path('matches/<int:id>/', views.match, name='match'),
     path('matches/<int:id>/bet/<str:homeoraway>/', views.bet, name='bet'),
     path('scoreboard/', views.scoreboard, name='scoreboard'),
