@@ -14,11 +14,6 @@ def index(request):
     return render(request, 'index.html')
 
 
-def logo(request, file):
-    filepath = 'tippingcomp/logos/'
-    return serve(request, file, filepath)
-
-
 def css(request, file):
     return serve(request, file + '.css', 'tippingcomp/templates/')
 

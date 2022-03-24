@@ -13,7 +13,6 @@ urlpatterns = [
     path('user/<str:name>/', views.showuser, name='user'),
     path('login/', LoginView.as_view(template_name='login.html'), name='login'),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('logos/<str:file>', views.logo, name='logo'),
     path('templates/<str:file>.css', views.css, name='css'),
     path('help/', views.help, name='help'),
 ]
