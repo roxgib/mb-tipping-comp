@@ -38,6 +38,7 @@ def recent_matches(request):
     ms = Match.objects.all()
     ms = [match for match in ms if match.begun()]
     ms = sorted(ms, key=lambda a:a.date)[:15]
+
     return render(request, 'matches.html', {"matches":add_match_info(get_user(request),ms), "title":"Recent Matches"})
 
 
@@ -60,7 +61,7 @@ def match(request, id):
         {
             "match": match, 
             "date": match.date.strftime("%a %-d %b"),
-            "time": match.date.strftime("%-I:%M%p"),
+            "time": match.date.strftime("%-I:%M%p").lower(),
             "bet": bet,
         }
     )

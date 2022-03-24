@@ -31,6 +31,10 @@ def add_match_info(user: User, matches: List[Match]) -> List[Match]:
         except:
             match.has_bet = False
 
+    for match in matches:
+        match.hdate = match.date.strftime("%a %-d %b")
+        match.htime = match.date.strftime("%-I:%M%p").lower()
+
         match.begun = match.begun()
     
     return matches

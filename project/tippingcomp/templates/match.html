@@ -16,13 +16,9 @@
     }
 
     .row {
-      position: relative;
       display: block;
-      width: 100%;
-      height: auto;
       font-weight: bold;
       font-size: large;
-      font-family: Verdana, Geneva, Tahoma, sans-serif;
 
     }
 
@@ -35,16 +31,12 @@
     }
 
     .team {
-      position: relative;
       display: inline-block;
-      width: 40%;
-      margin: auto;
       text-align: center;
     }
 
     .vs {
       display: inline-block;
-      width: 20%;
       height: auto;
       margin: auto;
       text-align: center;
@@ -76,7 +68,7 @@
     <div class="container">
       <div class="rowcontainer">
         <div class="row">
-          <div class="team"><a href="bet/home"><img src="/static/{{match.home_team_key.abbrev}}.png" alt="Logo" width = "auto" height="auto"/><br>{{ match.home_team_key.name }}</a></div><div class="vs"><div class="info">{{ match.venue }}<br><br><div>{{ date }}<br>{{ time }}<br><br><br></div></div></div><div class="team"><a href="bet/away"><img src="/static/{{match.away_team_key.abbrev}}.png" alt="Logo" width = "auto" height="auto"/><br>{{ match.away_team_key.name }}</a></div>
+          <div class="team col-5"><a href="bet/home"><img src="/static/{{match.home_team_key.abbrev}}.png" alt="Logo" width = "auto" height="auto"/><br>{{ match.home_team_key.name }}</a></div><div class="vs col-2"><div class="info">{{ match.venue }}<br><br><div>{{ date }}<br>{{ time }}<br><br><br></div></div></div><div class="team col-5"><a href="bet/away"><img src="/static/{{match.away_team_key.abbrev}}.png" alt="Logo" width = "auto" height="auto"/><br>{{ match.away_team_key.name }}</a></div>
         </div>
       </div>
       <div class="bet"><br>{{ bet }}</div>
