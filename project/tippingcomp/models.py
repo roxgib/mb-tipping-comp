@@ -64,6 +64,7 @@ class Match(models.Model):
     is_final = models.BooleanField(default=False)
     year = models.IntegerField(default=2022)
     complete = models.BooleanField(default=False)
+    timestr = models.CharField('timestr', max_length=100, default=None, blank=True, null=True)
     localtime = models.DateTimeField('Local Time', default=None, blank=True, null=True)
 
     def __str__(self):
