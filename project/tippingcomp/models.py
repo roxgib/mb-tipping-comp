@@ -26,11 +26,16 @@ class User(dUser):
         return self.first_name + ' ' + self.last_name
 
     def updateScore(self):
-        bets = [bet for bet in Bet.objects.all() if bet.user == self]
+        matches = [match for match in Match.objects.all() if match.complete]
 
         score = 0
-        for bet in bets:
-            if bet.result:
+        for match in matches:
+            try:
+                b: Bet = Bet.objects.get(user=self, match=match)
+                result = b.result
+            except:
+                result = match.winnerteamid == match.ateamid 
+            if result:
                 score += 1
         
         self.score = score
