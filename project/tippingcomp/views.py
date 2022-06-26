@@ -106,7 +106,7 @@ def showuser(request, name):
                 teams = match.hteam, match.ateam
                 try:
                     b: Bet = Bet.objects.get(user=_user, match=match)
-                    s = f"Picked {teams[b.bet]} over {teams[not b.bet]} and {'won' if b.result else 'lost'}"
+                    s = f"Picked {teams[not b.bet]} over {teams[b.bet]} and {'won' if b.result else 'lost'}"
                 except:
                     s = f"Didn't bet on {teams[0]} vs {teams[1]}, got {teams[1]} by default and {'won' if match.winnerteamid == match.ateamid else 'lost'}"
                 round_results.append(s)
