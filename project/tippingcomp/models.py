@@ -6,7 +6,6 @@ from typing import Union
 from django.db import models
 
 from django.contrib.auth.models import User as dUser
-import pytz
 
 class Team(models.Model):
     id = models.IntegerField('ID', primary_key=True)

@@ -1,17 +1,17 @@
 from datetime import datetime
 from django.test import TestCase
 
-from .models import *
-from .squiggle import *
+from .models import User, Team, Match, Bet
+from .squiggle import getMatches
 
 
 class ModelTests(TestCase):
     def setUp(self):
         self.user = User(
-            username = 'test', 
-            first_name = 'first', 
-            last_name='last', 
-            email='samjr.bradshaw@gmail.com'
+            username = 'test',
+            first_name = 'first',
+            last_name = 'last',
+            email = 'samjr.bradshaw@gmail.com'
             )
 
         self.team1 = Team(id = 1, name = f"Test Team {1}", abbrev = f"TT{1}", retirement = 9999)

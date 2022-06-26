@@ -69,7 +69,6 @@ def match(request, id):
 
 def bet(request, id: int, homeoraway: str) -> HttpResponse:
     if homeoraway not in ('home' 'away'): redirect(f"/tippingcomp/matches/{id}/")
-    homeoraway = True if homeoraway == "home" else False
     user = get_user(request)
     if not user.is_authenticated:
         return redirect(f"/tippingcomp/login/")
@@ -85,7 +84,7 @@ def bet(request, id: int, homeoraway: str) -> HttpResponse:
     bet = Bet.objects.filter(user=user, match=match)
     if bet: bet.delete()
 
-    b = Bet(user=user, match=match, bet=homeoraway)
+    b = Bet(user=user, match=match, bet=(homeoraway == "home"))
     b.save()
 
     return redirect(f"/tippingcomp/matches/{id}/")
@@ -98,15 +97,23 @@ def scoreboard(request):
 
 def showuser(request, name):
     _user = User.objects.get(first_name=name)
-    bets = Bet.objects.all()
-    bets = [bet for bet in bets if bet.user == _user]
-    rounds = []
-    for i in range(1, 24):
-        round = [f'{bet.match.hteam if bet.bet else bet.match.ateam} over {bet.match.ateam if bet.bet else bet.match.hteam}' for bet in bets if (bet.match.round == i) and bet.match.complete]
+    rounds = list()
+    matches = [match for match in Match.objects.all() if match.complete]
+    for round in range(1, 24):
+        round_results = []
+        for match in matches:
+            if match.round == round:
+                teams = match.hteam, match.ateam
+                try:
+                    b: Bet = Bet.objects.get(user=_user, match=match)
+                    s = f"Picked {teams[b.bet]} over {teams[not b.bet]} and {'won' if b.result else 'lost'}"
+                except:
+                    s = f"Didn't bet on {teams[0]} vs {teams[1]}, got {teams[1]} by default and {'won' if match.winnerteamid == match.ateamid else 'lost'}"
+                round_results.append(s)
 
-        if round:
-            round.insert(0, f"Round {i}")
-            rounds.append(round)
+        if round_results:
+            round_results.insert(0, f"Round {round}")
+            rounds.append(round_results)
 
     if not rounds:
         rounds = [[name + " hasn't made any bets yet."]]
