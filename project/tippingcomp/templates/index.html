@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     {% include 'head.html' %}
@@ -6,24 +6,33 @@
   <style>
 
     {% include 'base.css' %}
+    {% include 'index.css' %}
 
     .all {
       text-align: center;
     }
   </style>
   <body>
-
     {% include 'topnav.html' %}
-    
-    <div class="all">
-      <h1>Welcome to the <b>Inaugral Bradshaw-Morland Family Tipping Comp!</b></h1>
-      
-      To get started, click on Upcoming Matches, select a match, and start placing your bets!
-      <br>
-      <br>
-      I'm still working out some time zone issues, but these should be fixed soon.
-      <br>
-      <br>
+
+    <div id="content" class="all">
+      <h2>Welcome to the...</h2>
+      <h1>
+        <b
+          >Second Annual Morland-Bradshaw
+          <br />
+          Family Tipping Comp!</b
+        >
+      </h1>
+
+      <div id="main-content">
+        <h2>Recent Results</h2>
+        <h2>Ladder</h2>
+        <h2>Next Matches</h2>
+
+      </div>
+
+      <br />
     </div>
     {% include 'scripts.html' %}
   </body>

@@ -21,7 +21,7 @@ def getTeams():
     return result
 
 
-def getMatches(year='2022', round=None, game=None, complete=None):
+def getMatches(year='2023', round=None, game=None, complete=None):
     params = {
         'q':        'games',
         'year':     year,
@@ -36,7 +36,7 @@ def getMatches(year='2022', round=None, game=None, complete=None):
     return result
 
 
-def getTips(year='2022', round=None, game=None, complete=None):
+def getTips(year='2023', round=None, game=None, complete=None):
     params = {
         'q':        'tips',
         'year':     year,
@@ -51,7 +51,7 @@ def getTips(year='2022', round=None, game=None, complete=None):
     return result
 
 
-def getStandings(year='2022', round=None):
+def getStandings(year='2023', round=None):
     params = {
         'q':        'standings',
         'year':     year,
@@ -64,7 +64,7 @@ def getStandings(year='2022', round=None):
     return result
 
 
-def getLadder(year='2022', round=None, source=None):
+def getLadder(year='2023', round=None, source=None):
     params = {
         'q':        'standings',
         'year':     year,

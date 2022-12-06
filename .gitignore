@@ -1,6 +1,7 @@
 project/tippingcomp/users.py
 project/tipping/settings.py
 project/secret_key.txt
+deploy.sh
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
