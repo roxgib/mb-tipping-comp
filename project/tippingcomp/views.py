@@ -6,7 +6,7 @@ from django.utils import timezone
 from django.views.static import serve
 
 from .models import Bet, Match, Team, User
-from .squiggle import update, updateTeams
+from .squiggle import update, update_teams
 from .funcs import add_match_info
 
 

@@ -2,7 +2,7 @@ from datetime import datetime
 from django.test import TestCase
 
 from .models import User, Team, Match, Bet
-from .squiggle import getMatches
+from .squiggle import get_matches
 
 
 class ModelTests(TestCase):
@@ -82,7 +82,7 @@ class ModelTests(TestCase):
 
 class SquiggleTests(TestCase):
     def test_get_matches(self):
-        match = Match(**getMatches(game="8662")[0])
+        match = Match(**get_matches(game="8662")[0])
         self.assertEquals(match.hteam, "Melbourne")
         self.assertEquals(match.ateam, "Western Bulldogs")
         self.assertEquals(match.id, 8662)
@@ -99,7 +99,7 @@ class SquiggleTests(TestCase):
 
 class TimeHandlingTests(TestCase):
     def test_match_local_time(self):
-        match = Match(**getMatches(game="8662")[0])
+        match = Match(**get_matches(game="8662")[0])
         #FIXME: these aren't implemented yet
         # self.assertEquals(match.timezones(), datetime)
         # self.assertEquals(match.utc_datetime(), datetime(2022, 3, 16, 19, 10, 00))

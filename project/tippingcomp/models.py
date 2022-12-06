@@ -65,11 +65,12 @@ class Match(models.Model):
     agoals = models.IntegerField('Away Team Goals', default=None, blank=True, null=True)
     abehinds = models.IntegerField('Away Team Behinds', default=None, blank=True, null=True)
     is_grand_final = models.BooleanField(default=False)
-    is_final = models.BooleanField(default=False)
+    is_final = models.IntegerField('Is Final', default=None, blank=True, null=True)
     year = models.IntegerField(default=2022)
     complete = models.BooleanField(default=False)
     timestr = models.CharField('timestr', max_length=100, default=None, blank=True, null=True)
     localtime = models.DateTimeField('Local Time', default=None, blank=True, null=True)
+    unixtime = models.IntegerField('Unix Time', default=None, blank=True, null=True)
 
     def __str__(self):
         return f"{self.home_team_key.abbrev} vs. {self.away_team_key.abbrev}, {self.date.strftime('%a %-d %b')} (R{self.round})"
