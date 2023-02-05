@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    {% include 'head.html' %}
+  </head>
+  <style>
+
+    {% include 'base.css' %}
+
+    .loginform {
+      display: flex;
+      flex-direction: column;
+      margin: auto;
+      width: 15em;
+    }
+
+    .loginform input {
+      margin: 0.5em;
+      padding: 0.5em;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+  </style>
+  <body>
+    {% include 'topnav.html' %}
+    <br>
+    <br>
+      <form class="loginform" method="post" action="/tippingcomp/register/">
+        {% csrf_token %}
+        <input type="text" name="username" placeholder="User Name">
+        <input type="text" name="firstname" placeholder="First Name">
+        <input type="text" name="lastname" placeholder="Last Name">
+        <input type="password" name="password" placeholder="Password">
+        <input type="password" name="confirmpassword" placeholder="Confirm Password">
+        <div>{{ error }} </div>
+        <button type="submit">Register</button>
+      </form>
+    {% include 'scripts.html' %}
+  </body>
+</html>

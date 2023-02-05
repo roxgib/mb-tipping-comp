@@ -1,26 +1,27 @@
 from datetime import datetime, timedelta, timezone
 from typing import List
 
-from .models import Match, User, Bet
+from tippingcomp.models import Match, User, Bet
 
 venues = {
-    'Adelaide Oval',
-    'Bellerive Oval',
-    'Carrara',
-    'Docklands',
-    'Eureka Stadium',
-    'Gabba',
-    'Kardinia Park',
-    'M.C.G.',
-    'Manuka Oval',
-    'Perth Stadium',
-    'S.C.G.',
-    'Stadium Australia',
-    'Sydney Showground',
-    'Traeger Park',
-    'York Park',
+    "Adelaide Oval",
+    "Bellerive Oval",
+    "Carrara",
+    "Docklands",
+    "Eureka Stadium",
+    "Gabba",
+    "Kardinia Park",
+    "M.C.G.",
+    "Manuka Oval",
+    "Perth Stadium",
+    "S.C.G.",
+    "Stadium Australia",
+    "Sydney Showground",
+    "Traeger Park",
+    "York Park",
     "Cazaly's Stadium",
 }
+
 
 def add_match_info(user: User, matches: List[Match]) -> List[Match]:
     for match in matches:
@@ -36,11 +37,9 @@ def add_match_info(user: User, matches: List[Match]) -> List[Match]:
         match.htime = match.date.strftime("%-I:%M%p").lower()
 
         match.begun = match.begun()
-    
+
     return matches
 
 
 def tilly_bets():
-    fav_teams = [
-        "Sydney"
-    ]
+    fav_teams = ["Sydney"]

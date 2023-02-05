@@ -1,3 +1,3 @@
 import subprocess
 
-subprocess.run('./update.sh')
+subprocess.run("./update.sh")

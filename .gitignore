@@ -2,6 +2,7 @@ project/tippingcomp/users.py
 project/tipping/settings.py
 project/secret_key.txt
 deploy.sh
+.vscode/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -133,3 +134,6 @@ dmypy.json
 # Pyre type checker
 .pyre/
 project/tipping/settings.py
+tippingcomp/templates/matches.html
+tippingcomp.service
+.vscode/settings.json

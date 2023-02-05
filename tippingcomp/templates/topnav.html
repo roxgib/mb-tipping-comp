@@ -1,0 +1,73 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">
+      <img
+        src="/static/logo.png"
+        alt="AFL Ball Logo"
+        width="40"
+        height="auto"
+      />
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <div class="navbar-nav">
+        <a
+          class="nav-link"
+          href="/tippingcomp/"
+          >Home
+        </a>
+        <a
+          class="nav-link {% if request.url.split("/")[-1] == 'scoreboard' %}active{% endif %}"
+          href="/tippingcomp/scoreboard"
+          >Ladder</a
+        >
+        <a
+          class="nav-link {% if request.url.split("/")[-1] == 'upcoming' %}active{% endif %}"
+          href="/tippingcomp/matches/upcoming"
+          >Upcoming Matches</a
+        >
+        <a
+          class="nav-link {% if request.url.split("/")[-1] == 'recent' %}active{% endif %}"
+          href="/tippingcomp/matches/recent"
+          >Recent Matches</a
+        >
+        <a
+          class="nav-link {% if request.url.split("/")[-1] == 'matches' %}active{% endif %}"
+          href="/tippingcomp/matches/"
+          >All Matches</a
+        >
+        <a
+          class="nav-link {% if request.url.split("/")[-1] == 'help' %}active{% endif %}"
+          href="/tippingcomp/help/"
+          >Help</a
+        >
+        {% if current_user.is_authenticated %}
+        <a class="nav-link login" href="/tippingcomp/logout/">Log Out</a>
+        {% else %}
+        <a
+          class="nav-link login {% if request.url.split("/")[-1] == 'login' %}active{% endif %}"
+          href="/tippingcomp/login/"
+          >Login</a
+        >
+        <a
+          class="nav-link login {% if request.url.split("/")[-1] == 'register' %}active{% endif %}"
+          href="/tippingcomp/register/"
+          >Register</a
+        >
+
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</nav>
