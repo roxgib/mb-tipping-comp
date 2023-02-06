@@ -14,8 +14,8 @@ from models import Bet, Match, Team, User
 def index():
     """Renders the home page."""
     users = sorted(User.query.all(), key=lambda u: u.score, reverse=True)
-    next_match = Match.query.filter_by(complete=False).first()
-    return render_template("index.html", users=users[:3], match=next_match)
+    next_match = Match.query.filter(Match.complete==False).order_by(Match.date).first()
+    return render_template("index.html", users=users[:5], match=next_match)
 
 
 @app.route("/tippingcomp/help/")
