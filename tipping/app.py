@@ -19,10 +19,16 @@ db = SQLAlchemy(app)
 login_manager = flask_login.LoginManager()
 login_manager.init_app(app)
 
-from . import views, models
-
+import views
+import models
 
 login_manager.login_view = "views.login"
 
 with app.app_context():
     db.create_all()
+
+# from squiggle import update, update_teams
+# update()
+
+# from users import createUsers
+# createUsers()

@@ -4,7 +4,7 @@ from time import strftime
 
 import flask_login
 
-from tippingcomp.app import db, login_manager
+from app import db, login_manager
 
 class Team(db.Model):
     __tablename__ = "teams"
@@ -26,19 +26,18 @@ class User(db.Model, flask_login.UserMixin):
     first_name = db.Column(db.String(200))
     last_name = db.Column(db.String(200))
     email = db.Column(db.String(200))
-    password_hash = db.Column(db.String(200))
 
     def __str__(self):
         return self.first_name + " " + self.last_name
 
     @property
     def score(self):
-        matches = [match for match in Match.objects.all() if match.complete]
+        matches = [match for match in Match.query.all() if match.complete]
 
         score = 0
         for match in matches:
             try:
-                b: Bet = Bet.objects.get(user=self, match=match)
+                b: Bet = Bet.query.filter_by(user=self, match=match).first()
                 result = b.result
             except:
                 result = match.winnerteamid == match.ateamid
@@ -100,7 +99,7 @@ class Match(db.Model):
 
     def home_team(self):
         return Team.query.get(self.home_team_key)
-        
+
     class Meta:
         verbose_name_plural = "Matches"
 

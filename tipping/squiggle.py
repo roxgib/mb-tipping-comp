@@ -6,10 +6,11 @@ from __future__ import annotations
 from requests import get
 import json
 
-from flask_sqlalchemy import SQLAlchemy, session
+from flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import session
 
-from .app import app, db
-from .models import Match, Team, Bet, User
+from app import app, db
+from models import Match, Team, Bet, User
 
 SQUIGGLE = "https://api.squiggle.com.au/"
 YEAR = "2023"
@@ -73,10 +74,6 @@ def update():
         bets = Bet.query.all()
         for bet in bets:
             bet.updateResult()
-
-        users = User.query.all()
-        for user in users:
-            user.updateScore()
 
         db.session.commit()
 

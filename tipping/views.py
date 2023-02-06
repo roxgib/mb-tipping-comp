@@ -1,19 +1,20 @@
-from tippingcomp.app import app, db, login_manager
-from tippingcomp.squiggle import update, update_teams
-from tippingcomp.funcs import add_match_info
+from app import app, db, login_manager
+from squiggle import update, update_teams
+from funcs import add_match_info
 
 import flask
 from flask import render_template, request, redirect, url_for, Response, session, abort
 import flask_login
 from flask_login import login_user, logout_user, login_required
 
-from tippingcomp.models import Bet, Match, Team, User
+from models import Bet, Match, Team, User
 
 
 @app.route("/tippingcomp/")
 def index():
     """Renders the home page."""
-    return render_template("index.html")
+    users = sorted(User.query.all(), key=lambda u: u.score, reverse=True)
+    return render_template("index.html", users=users[:3])
 
 
 @app.route("/tippingcomp/help/")
@@ -58,7 +59,7 @@ def recent_matches():
 
 @app.route("/tippingcomp/matches/<int:id>/")
 def match(id):
-    match = Match.query.get(id=id)
+    match = Match.query.get(id)
     try:
         bet = Bet.query.get(match=match, user=flask_login.current_user)
         bet = f"You bet on {bet.match.hteam if bet.bet else bet.match.ateam}. "
@@ -108,11 +109,8 @@ def bet(id: int, homeoraway: str):
 
 @app.route("/tippingcomp/scoreboard/")
 def scoreboard():
-    users = User.query.all()
-    return render_template(
-        "scoreboard.html",
-        users=sorted(users, key=lambda u: u.score, reverse=True),
-    )
+    users = sorted(User.query.all(), key=lambda u: u.score, reverse=True)
+    return render_template("scoreboard.html", users=users)
 
 
 @app.route("/tippingcomp/user/<name>/")

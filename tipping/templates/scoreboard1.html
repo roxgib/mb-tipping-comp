@@ -1,0 +1,12 @@
+<div id="container">
+  {% for user in users %}
+  <div class="row">
+    <div class="name">
+      <a href="/tippingcomp/user/{{ user.first_name }}/"
+        ><span>{{ user.first_name }}</span></a
+      >
+    </div>
+    <div class="score">{{ user.score }}</div>
+  </div>
+  {% endfor %}
+</div>

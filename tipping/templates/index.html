@@ -7,6 +7,7 @@
 
     {% include 'base.css' %}
     {% include 'index.css' %}
+    {% include 'scoreboard.css' %}
 
     .all {
       text-align: center;
@@ -24,12 +25,17 @@
           Family Tipping Comp!</b
         >
       </h1>
-
       <div id="main-content">
-        <h2>Recent Results</h2>
-        <h2>Ladder</h2>
-        <h2>Next Matches</h2>
-
+        <div>
+          <h2>Recent Results</h2>
+        </div>
+        <div>
+          <h2>Ladder</h2>
+          {% include 'scoreboard1.html' %}
+        </div>
+        <div>
+          <h2>Next Matches</h2>
+        </div>
       </div>
 
       <br />

@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta, timezone
 from typing import List
 
-from tippingcomp.models import Match, User, Bet
+from models import Match, User, Bet
 
 venues = {
     "Adelaide Oval",
