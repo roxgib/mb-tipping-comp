@@ -14,7 +14,9 @@ from models import Bet, Match, Team, User
 def index():
     """Renders the home page."""
     users = sorted(User.query.all(), key=lambda u: u.score, reverse=True)
-    next_match = Match.query.filter(Match.complete==False).order_by(Match.date).first()
+    next_match = (
+        Match.query.filter(Match.complete == False).order_by(Match.date).first()
+    )
     return render_template("index.html", users=users[:5], match=next_match)
 
 
@@ -90,7 +92,9 @@ def bet(id: int, homeoraway: str):
     if not user.is_authenticated:
         return redirect(f"/tippingcomp/login/")
     try:
-        user = User.query.get(first_name=user.first_name, last_name=user.last_name)
+        user = User.query.filter_by(
+            first_name=user.first_name, last_name=user.last_name
+        ).first()
     except User.DoesNotExist:
         return redirect(f"/tippingcomp/login/")
 
@@ -143,19 +147,17 @@ def show_user(name):
 
 @app.route("/tippingcomp/login/", methods=["GET", "POST"])
 def login():
-    form = flask_login.LoginForm()
-    if request.method == "POST":
-        login_user(flask_login.user, remember=True)
-
-        flask.flash("Logged in successfully.")
-
-        next = request.args.get("next")
-        if not flask_login.is_safe_url(next):
-            return flask.abort(400)
-
-        return flask.redirect(next or flask.url_for("index"))
-    else:
-        return flask.render_template("login.html", form=form)
+    if request.method == "GET":
+        return flask.render_template("login.html")
+    email = request.form["email"]
+    password = request.form["password"]
+    user = User.query.filter(User.email == email).first()
+    if not user or not user.check_password(password):
+        flask.flash("Incorrect username or password")
+        return flask.redirect(flask.url_for("login"))
+    login_user(user, remember=True)
+    next = request.args.get("next")
+    return flask.redirect(next or flask.url_for("index"))
 
 
 @app.route("/tippingcomp/logout/")
@@ -167,18 +169,22 @@ def logout():
 
 @app.route("/tippingcomp/register/", methods=["GET", "POST"])
 def register():
-    if request.method == "POST":
-        username = request.POST["username"]
-        firstname = request.POST["firstname"]
-        lastname = request.POST["lastname"]
-        password = request.POST["password"]
-        confirmpassword = request.POST["confirmpassword"]
-        if password != confirmpassword:
-            return render_template("register.html", error="Passwords don't match.")
-        if User.query.filter(username=username):
-            return render_template("register.html", error="User already exists.")
-        user = User(username=username, first_name=firstname, last_name=lastname)
-        user.set_password(password)
-        user.save()
-        return redirect("/tippingcomp/login/")
-    return render_template("register.html")
+    if request.method == "GET":
+        return render_template("register.html")
+    email = request.form["email"]
+    firstname = request.form["firstname"]
+    lastname = request.form["lastname"]
+    password = request.form["password"]
+    confirmpassword = request.form["confirmpassword"]
+    if password != confirmpassword:
+        return render_template("register.html", error="Passwords don't match.")
+    if (
+        User.query.filter_by(email=email).first()
+        or User.query.filter_by(first_name=firstname, last_name=lastname).first()
+    ):
+        return render_template("register.html", error="User already exists.")
+    user = User(email=email, first_name=firstname, last_name=lastname)
+    user.set_password(password)
+    db.session.add(user)
+    db.session.commit()
+    return redirect("/tippingcomp/login/")

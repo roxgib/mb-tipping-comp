@@ -1,10 +1,13 @@
 from datetime import datetime, timedelta, timezone
 from email.utils import localtime
 from time import strftime
+import hashlib
+import os
 
 import flask_login
 
 from app import db, login_manager
+
 
 class Team(db.Model):
     __tablename__ = "teams"
@@ -22,10 +25,11 @@ class Team(db.Model):
 class User(db.Model, flask_login.UserMixin):
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    username = db.Column(db.String(200))
     first_name = db.Column(db.String(200))
     last_name = db.Column(db.String(200))
     email = db.Column(db.String(200))
+    password_hash = db.Column(db.String(500))
+    salt = db.Column(db.String(100), default="")
 
     def __str__(self):
         return self.first_name + " " + self.last_name
@@ -52,6 +56,23 @@ class User(db.Model, flask_login.UserMixin):
     @login_manager.user_loader
     def get_user(id):
         return User.query.get(id)
+
+    def set_password(self, password: str):
+        self.salt = os.urandom(18).hex()
+        self.password_hash = self._hash_password(password)
+
+    def check_password(self, password: str) -> bool:
+        return self._hash_password(password) == self.password_hash
+
+    def _hash_password(self, password: str) -> str:
+        key = hashlib.pbkdf2_hmac(
+            "sha512",
+            password.encode("utf-8"),
+            self.salt.encode("utf-8"),
+            100_000,
+            dklen=128,
+        )
+        return key.hex()
 
 
 class Match(db.Model):

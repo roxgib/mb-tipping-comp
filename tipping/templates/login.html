@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     {% include 'head.html' %}
@@ -7,19 +7,40 @@
 
     {% include 'base.css' %}
 
-    .loginform {
+    .loginform form {
       display: flex;
       justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+
+    .loginform form input {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin: 0.5rem 0;
     }
   </style>
   <body>
     {% include 'topnav.html' %}
-    <br>
-    <br>
+    <br />
+    <br />
     <div class="loginform">
       <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
+        <input
+          type="email"
+          name="email"
+          id="email"
+          placeholder="Email"
+          required
+        />
+        <input
+          type="password"
+          name="password"
+          id="password"
+          placeholder="Password"
+          required
+        />
         <button type="submit">Log In</button>
       </form>
     </div>

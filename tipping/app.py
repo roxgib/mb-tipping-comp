@@ -29,6 +29,7 @@ with app.app_context():
     db.create_all()
 
 # from squiggle import update, update_teams
+# update_teams()
 # update()
 
 # from users import createUsers
