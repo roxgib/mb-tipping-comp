@@ -1,7 +1,7 @@
 <div class="team col-6 col-sm-5">
   <a href="/tippingcomp/matches/{{ match.id }}/bet/home"
     ><img
-      src="/static/{{match.home_team().abbrev}}.png"
+      src="{{ url_for('static', filename=match.home_team().abbrev+'.png') }}"
       class="img-fluid"
       alt="Logo"
     /><br /><br />{{ match.home_team().name }}</a
@@ -10,7 +10,7 @@
 <div class="col-6 col-sm-5 order-sm-3 team">
   <a href="/tippingcomp/matches/{{ match.id }}/bet/away"
     ><img
-      src="/static/{{match.away_team().abbrev}}.png"
+      src="{{ url_for('static', filename=match.away_team().abbrev+'.png') }}"
       class="img-fluid"
       alt="Logo"
     /><br /><br />{{ match.away_team().name }}</a
