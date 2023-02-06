@@ -18,7 +18,11 @@ YEAR = "2023"
 
 def get_from_squiggle(params: dict) -> dict:
     """Get data from the Squiggle API"""
-    return json.loads(get(SQUIGGLE, params).text)
+    headers = {
+        "User-Agent": "Morland-Bradshaw Family Tipping Competition",
+        "From": "samjr.bradshaw@gmail.com",
+    }
+    return json.loads(get(SQUIGGLE, params, headers=headers).text)
 
 
 def get_teams() -> list[dict]:
@@ -56,8 +60,12 @@ def update():
         for match in updated_matches[::-1]:
             if match["hteamid"] is None or match["ateamid"] is None:
                 continue
-            match["home_team_key"] = Team.query.filter_by(id=match["hteamid"]).first().id
-            match["away_team_key"] = Team.query.filter_by(id=match["ateamid"]).first().id
+            match["home_team_key"] = (
+                Team.query.filter_by(id=match["hteamid"]).first().id
+            )
+            match["away_team_key"] = (
+                Team.query.filter_by(id=match["ateamid"]).first().id
+            )
             match["complete"] = True if match["complete"] == 100 else False
 
             try:
