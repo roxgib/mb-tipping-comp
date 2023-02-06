@@ -1,6 +1,7 @@
+import json
+
 from app import app, db, login_manager
 from squiggle import update, update_teams
-from funcs import add_match_info
 
 import flask
 from flask import render_template, request, redirect, url_for, Response, session, abort
@@ -30,10 +31,9 @@ def help():
 @app.route("/tippingcomp/matches/")
 def matches():
     """Renders the matches page."""
-    ms = Match.query.all()
     return render_template(
         "matches.html",
-        matches=add_match_info(flask_login.current_user, ms),
+        matches=Match.query.all(),
         title="All Matches",
     )
 
@@ -41,10 +41,9 @@ def matches():
 @app.route("/tippingcomp/matches/upcoming")
 def upcoming_matches():
     ms = [match for match in Match.query.all() if not match.begun()]
-    ms = sorted(ms, key=lambda a: a.date)[:15]
     return render_template(
         "matches.html",
-        matches=add_match_info(flask_login.current_user, ms),
+        matches=sorted(ms, key=lambda a: a.date)[:15],
         title="Upcoming Matches",
     )
 
@@ -56,7 +55,7 @@ def recent_matches():
 
     return render_template(
         "matches.html",
-        matches=add_match_info(flask_login.current_user, ms),
+        matches=ms,
         title="Recent Matches",
     )
 
@@ -102,7 +101,11 @@ def bet(id: int, homeoraway: str):
     db.session.add(b)
     db.session.commit()
 
-    return redirect(f"/tippingcomp/matches/{id}/")
+    return (
+        json.dumps({"success": True, "team": b.chosen_team.name}),
+        200,
+        {"ContentType": "application/json"},
+    )
 
 
 @app.route("/tippingcomp/scoreboard/")

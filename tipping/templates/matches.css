@@ -1,18 +1,11 @@
 .rowcontainer {
   border-bottom: 1px solid #afafaf;
   margin: auto;
-  max-width: 35em;
+  width: 30em;
   padding-top: 20px;
   padding-bottom: 20px;
   font-weight: bold;
   font-size: large;
-}
-
-.matchRow {
-  min-width: 30em;
-  max-width: 35em;
-  display: flex;
-  flex-direction: row;
 }
 
 .vs {

@@ -36,12 +36,7 @@
         </div>
         <div>
           <h2>Next Match</h2>
-          <div class="matchRow">{% include 'match1.html' %}</div>
-          <div class="info">
-            {% if match.has_bet %} You have bet on {{ match.bet_team }}. {%
-            endif %} {% if match.begun %} Bets have closed. {% else %} Bets are
-            still open. {% endif %}
-          </div>
+          {% include 'match1.html' %}
         </div>
       </div>
 

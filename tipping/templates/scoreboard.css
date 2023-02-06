@@ -16,7 +16,7 @@ body {
   margin: auto;
 }
 
-.row {
+.scoreRow {
   position: relative;
   display: block;
   width: 100%;
@@ -46,17 +46,17 @@ a {
   width: 25%;
 }
 
-.row:nth-child(1) span {
+.scoreRow:nth-child(1) span {
   padding: 0.25em;
   border-radius: 25%;
   background: gold;
 }
-.row:nth-child(2) span {
+.scoreRow:nth-child(2) span {
   padding: 0.25em;
   border-radius: 25%;
   background: #c0c0c0;
 }
-.row:nth-child(3) span {
+.scoreRow:nth-child(3) span {
   padding: 0.25em;
   border-radius: 25%;
   background: #cd7f32;

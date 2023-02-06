@@ -11,18 +11,7 @@
   <body>
     {% include 'topnav.html' %}
     <div id="container">
-      {% for match in matches %}
-      <div class="rowcontainer">
-        <a href="/tippingcomp/matches/{{ match.id }}"
-          ><div class="row">{% include 'match1.html' %}</div>
-          <div class="info">
-            {% if match.has_bet %} You have bet on {{ match.bet_team }}. {%
-            endif %} {% if match.begun %} Bets have closed. {% else %} Bets are
-            still open. {% endif %}
-          </div></a
-        >
-      </div>
-      {% endfor %}
+      {% for match in matches %} {% include 'match1.html' %} {% endfor %}
     </div>
     {% include 'scripts.html' %}
   </body>

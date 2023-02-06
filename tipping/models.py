@@ -121,6 +121,22 @@ class Match(db.Model):
     def home_team(self):
         return Team.query.get(self.home_team_key)
 
+    @property
+    def has_bet(self) -> bool:
+        return (
+            Bet.query.filter_by(user=flask_login.current_user.id, match=self.id).first()
+            is not None
+        )
+
+    @property
+    def bet_team(self) -> str:
+        if not self.has_bet:
+            return ""
+        if Bet.query.filter_by(user=flask_login.current_user.id, match=self.id).first().bet:
+            return self.home_team().name
+        else:
+            return self.away_team().name
+
     class Meta:
         verbose_name_plural = "Matches"
 
@@ -135,6 +151,11 @@ class Bet(db.Model):
 
     def __str__(self):
         return f"{self.user.first_name} {self.match} {self.match.hteam if self.bet else self.match.ateam}"
+
+    @property
+    def chosen_team(self) -> Team:
+        match = Match.query.get(self.match)
+        return match.home_team() if self.bet else match.away_team()
 
     @property
     def result(self):

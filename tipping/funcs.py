@@ -23,22 +23,22 @@ venues = {
 }
 
 
-def add_match_info(user: User, matches: List[Match]) -> List[Match]:
-    for match in matches:
-        try:
-            bet = Bet.objects.get(match=match, user=user)
-            match.has_bet = True
-            match.bet_team = match.hteam if bet.bet else match.ateam
-        except:
-            match.has_bet = False
+# def add_match_info(user: User, matches: List[Match]) -> List[Match]:
+#     for match in matches:
+#         try:
+#             bet = Bet.objects.get(match=match, user=user)
+#             match.has_bet = True
+#             match.bet_team = match.hteam if bet.bet else match.ateam
+#         except:
+#             match.has_bet = False
 
-    for match in matches:
-        match.hdate = match.date.strftime("%a %-d %b")
-        match.htime = match.date.strftime("%-I:%M%p").lower()
+#     for match in matches:
+#         match.hdate = match.date.strftime("%a %-d %b")
+#         match.htime = match.date.strftime("%-I:%M%p").lower()
 
-        match.begun = match.begun()
+#         match.begun = match.begun()
 
-    return matches
+#     return matches
 
 
 def tilly_bets():
