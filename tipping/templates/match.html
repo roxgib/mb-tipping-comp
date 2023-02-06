@@ -55,7 +55,7 @@
     <div class="container">
       <div class="rowcontainer">
         <div class="row">
-          <div class="team col-6 col-sm-5"><a href="bet/home"><img src="/static/{{match.home_team().abbrev}}.png" class="img-fluid" alt="Logo"/><br><br>{{ match.home_team().name }}</a></div><div class="col-6 col-sm-5 order-sm-3 team"><a href="bet/away"><img src="/static/{{match.away_team().abbrev}}.png" class="img-fluid" alt="Logo"/><br><br>{{ match.away_team().name }}</a></div><div class="vs align-middle col-sm-2 order-sm-2"><div class="info">{{ match.venue }}<br><br><div>{{ date }}<br>{{ time }}</div></div></div>
+          {% include 'match1.html' %}
         </div>
       </div>
       <div class="bet"><br>{{ bet }}</div>

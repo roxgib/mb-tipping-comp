@@ -1,19 +1,18 @@
 .rowcontainer {
   border-bottom: 1px solid #afafaf;
-  max-width: 600px;
   margin: auto;
+  max-width: 35em;
   padding-top: 20px;
   padding-bottom: 20px;
   font-weight: bold;
   font-size: large;
 }
 
-.team {
-  position: relative;
-  display: inline-block;
-  width: 40%;
-  margin: auto;
-  text-align: center;
+.matchRow {
+  min-width: 30em;
+  max-width: 35em;
+  display: flex;
+  flex-direction: row;
 }
 
 .vs {
@@ -38,5 +37,30 @@
 
 a {
   text-decoration: none;
-  color: var(--text-color)
+  color: var(--text-color);
+}
+
+.team {
+  position: relative;
+  display: inline-block;
+  width: 40%;
+  margin: auto;
+  text-align: center;
+}
+
+.vs {
+  display: inline-block;
+  text-align: center;
+  margin: auto;
+}
+
+.info {
+  display: inline-block;
+  text-align: center;
+  font-size: small;
+  font-weight: normal;
+}
+
+.bet {
+  text-align: center;
 }
