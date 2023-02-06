@@ -112,7 +112,8 @@ class Match(db.Model):
     def datetime(self) -> datetime:
         return datetime.fromtimestamp(self.unixtime, timezone.utc)
 
-    def begun(self) -> bool:
+    @property
+    def has_begun(self) -> bool:
         return self.datetime() < datetime.now(timezone.utc)
 
     def away_team(self):

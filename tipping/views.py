@@ -40,7 +40,7 @@ def matches():
 
 @app.route("/tippingcomp/matches/upcoming")
 def upcoming_matches():
-    ms = [match for match in Match.query.all() if not match.begun()]
+    ms = [match for match in Match.query.all() if not match.has_begun]
     return render_template(
         "matches.html",
         matches=sorted(ms, key=lambda a: a.date)[:15],
@@ -50,7 +50,7 @@ def upcoming_matches():
 
 @app.route("/tippingcomp/matches/recent/")
 def recent_matches():
-    ms = [match for match in Match.query.all() if match.begun()]
+    ms = [match for match in Match.query.all() if match.has_begun]
     ms = sorted(ms, key=lambda a: a.date)[:15]
 
     return render_template(
@@ -69,7 +69,7 @@ def match(id):
     except:
         bet = "You haven't bet on this game. "
 
-    if match.begun():
+    if match.has_begun():
         bet += "Bets have now closed."
     else:
         bet += "Bets are still open."
@@ -93,7 +93,7 @@ def bet(id: int, homeoraway: str):
         return redirect(f"/tippingcomp/login/")
 
     match = Match.query.get(id)
-    if match.begun():
+    if match.has_begun:
         return redirect(f"/tippingcomp/matches/{id}/")
 
     db.session.query(Bet).filter(Bet.user == user.id, Bet.match == match.id).delete()

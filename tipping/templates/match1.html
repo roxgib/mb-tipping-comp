@@ -26,8 +26,8 @@
     </div>
   </div>
   <div class="info" id="{{match.id}}">
-    {% if match.has_bet %} You have bet on {{ match.bet_team }}. {% endif %} {%
-    if match.begun %} Bets have closed. {% else %} Bets are still open. {% endif
+    {% if match.has_bet %} You have bet on {{ match.bet_team }}. {% endif %} 
+    {% if match.has_begun %} Bets have closed. {% else %} Bets are still open. {% endif
     %}
   </div>
 </div>
