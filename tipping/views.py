@@ -6,6 +6,7 @@ import flask
 from flask import render_template, request, redirect, url_for, Response, session, abort
 import flask_login
 from flask_login import login_user, logout_user, login_required
+import sqlalchemy
 
 from models import Bet, Match, Team, User
 
@@ -86,28 +87,20 @@ def match(id):
 @app.route("/tippingcomp/matches/<int:id>/bet/<homeoraway>/")
 @flask_login.login_required
 def bet(id: int, homeoraway: str):
-    if homeoraway not in ("home" "away"):
+    if homeoraway not in ("home", "away"):
         redirect(f"/tippingcomp/matches/{id}/")
-    user = flask_login.current_user()
+    user = flask_login.current_user
     if not user.is_authenticated:
         return redirect(f"/tippingcomp/login/")
-    try:
-        user = User.query.filter_by(
-            first_name=user.first_name, last_name=user.last_name
-        ).first()
-    except User.DoesNotExist:
-        return redirect(f"/tippingcomp/login/")
 
-    match = Match.query.get(id=id)
+    match = Match.query.get(id)
     if match.begun():
         return redirect(f"/tippingcomp/matches/{id}/")
 
-    bet = Bet.query.filter(user=user, match=match)
-    if bet:
-        bet.delete()
-
-    b = Bet(user=user, match=match, bet=(homeoraway == "home"))
-    b.save()
+    db.session.query(Bet).filter(Bet.user == user.id, Bet.match == match.id).delete()
+    b = Bet(user=user.id, match=match.id, bet=(homeoraway == "home"))
+    db.session.add(b)
+    db.session.commit()
 
     return redirect(f"/tippingcomp/matches/{id}/")
 
