@@ -48,7 +48,7 @@ def upcoming_matches():
     ms = [match for match in Match.query.all() if not match.has_begun]
     return render_template(
         "matches.html",
-        matches=sorted(ms, key=lambda a: a.date)[:15],
+        matches=sorted(ms, key=lambda a: a.date)[:30],
         title="Upcoming Matches",
     )
 
