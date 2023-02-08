@@ -160,7 +160,8 @@ class Bet(db.Model):
 
     @property
     def result(self):
-        if self.match.complete and self.match.winnerteamid is not None:
+        match = Match.query.get(self.match)
+        if match.complete and match.winnerteamid is not None:
             return (self.match.winnerteamid == self.match.hteamid) == self.bet
         else:
             return None

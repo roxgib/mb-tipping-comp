@@ -12,6 +12,10 @@ import sqlalchemy
 from models import Bet, Match, Team, User
 
 
+@app.route("/")
+def _index():
+    return redirect(url_for("index"))
+
 @app.route("/tippingcomp/")
 def index():
     """Renders the home page."""
@@ -114,10 +118,10 @@ def scoreboard():
     return render_template("scoreboard.html", users=users)
 
 
-@app.route("/tippingcomp/user/<name>/")
+@app.route("/tippingcomp/user/<int:id>/")
 @flask_login.login_required
-def show_user(name):
-    _user = User.query.get(first_name=name)
+def show_user(id: int):
+    _user = User.query.get(id)
     rounds = list()
     matches = [match for match in Match.query.all() if match.complete]
     for round in range(1, 24):
@@ -137,7 +141,7 @@ def show_user(name):
             rounds.append(round_results)
 
     if not rounds:
-        rounds = [[name + " hasn't made any bets yet."]]
+        rounds = [[_user.first_name + " hasn't made any bets yet."]]
     return render_template("user.html", user=_user, bets=rounds)
 
 

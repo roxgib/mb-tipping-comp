@@ -79,10 +79,6 @@ def update():
                 m = Match(**match)
                 db.session.add(m)
 
-        bets = Bet.query.all()
-        for bet in bets:
-            bet.updateResult()
-
         db.session.commit()
 
 
