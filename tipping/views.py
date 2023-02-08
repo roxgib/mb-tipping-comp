@@ -16,6 +16,7 @@ from models import Bet, Match, Team, User
 def _index():
     return redirect(url_for("index"))
 
+
 @app.route("/tippingcomp/")
 def index():
     """Renders the home page."""
@@ -148,13 +149,22 @@ def show_user(id: int):
 @app.route("/tippingcomp/login/", methods=["GET", "POST"])
 def login():
     if request.method == "GET":
-        return flask.render_template("login.html")
+        return flask.render_template("login.html", next=request.args.get("next"))
     email = request.form["email"]
     password = request.form["password"]
     user = User.query.filter(User.email == email).first()
-    if not user or not user.check_password(password):
-        flask.flash("Incorrect username or password")
-        return flask.redirect(flask.url_for("login"))
+    if not user:
+        return flask.render_template(
+            "login.html",
+            next=request.args.get("next"),
+            error="User not found. Did you type the email address correctly?",
+        )
+    if not user.check_password(password):
+        return flask.render_template(
+            "login.html",
+            next=request.args.get("next"),
+            error="Incorrect password.",
+        )
     login_user(user, remember=True)
     next = request.args.get("next")
     return flask.redirect(next or flask.url_for("index"))
