@@ -28,9 +28,6 @@ login_manager.login_view = "views.login"
 with app.app_context():
     db.create_all()
 
-# from squiggle import update, update_teams
-# update_teams()
-# update()
-
-# from users import createUsers
-# createUsers()
+from squiggle import update, update_teams
+update_teams()
+update()
